@@ -1,0 +1,58 @@
+<!--
+  Copyright (C) 2015 Łukasz Tomczak <lksztmczk@gmail.com>.
+
+  This file is part of OpenInTerminal plugin.
+
+  OpenInTerminal plugin is free software: you can redistribute it and/or modify  
+  it under the terms of the GNU Lesser General Public License as published by  
+  the Free Software Foundation, either version 3 of the License, or  
+  (at your option) any later version.  
+
+  OpenInTerminal plugin is distributed in the hope that it will be useful,  
+  but WITHOUT ANY WARRANTY; without even the implied warranty of  
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the  
+  GNU Lesser General Public License for more details.  
+
+  You should have received a copy of the GNU Lesser General Public License  
+  along with OpenInTerminal plugin. If not, see <http://www.gnu.org/licenses/>.  
+-->
+<idea-plugin version="2">
+  <id>pl.lksztmczk.openinterminal</id>
+  <name>Open in terminal</name>
+  <version>1.0</version>
+  <vendor email="lksztmczk@gmail.com" url="http://www.github.com/luktom">Łukasz Tomczak</vendor>
+
+  <description><![CDATA[
+      This plugin adds possibility for open terminal from editor and project context menu in corresponding file/directory location.<br>
+    ]]></description>
+
+  <change-notes><![CDATA[
+      1.0<br>
+      <em>Initial version of the plugin.</em>
+    ]]>
+  </change-notes>
+
+  <idea-version since-build="131"/>
+
+  <depends>com.intellij.modules.lang</depends>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <applicationConfigurable id="OpenInTerminal.settings" instance="settings.OpenInTerminalSettingsConfigurable"/>
+    <applicationService serviceImplementation="settings.OpenInTerminalSettings"/>
+  </extensions>
+
+  <application-components>
+  </application-components>
+
+  <project-components>
+  </project-components>
+
+  <actions>
+    <action id="OpenInTerminal.open" class="actions.OpenInTerminalAction" text="Open terminal from here"
+            description="Opens terminal with choosen directory.">
+      <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="CompareClipboardWithSelection"/>
+      <add-to-group group-id="ProjectViewPopupMenu" anchor="after" relative-to-action="RevealIn"/>
+    </action>
+  </actions>
+
+</idea-plugin>
