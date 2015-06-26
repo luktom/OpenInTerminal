@@ -1,6 +1,6 @@
 /**
  * Copyright (C) 2015 Łukasz Tomczak <lksztmczk@gmail.com>.
- *
+ * 
  * This file is part of OpenInTerminal plugin.
  *
  * OpenInTerminal plugin is free software: you can redistribute it and/or modify
@@ -16,30 +16,21 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with OpenInTerminal plugin. If not, see <http://www.gnu.org/licenses/>.
  */
-package settings;
+package actions;
 
-import javax.swing.*;
+import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.vfs.VirtualFile;
+import org.jetbrains.annotations.NotNull;
+import settings.OpenInTerminalSettingsState;
 
 /**
  * @author Łukasz Tomczak <lksztmczk@gmail.com>
  */
-public class OpenInTerminalSettingsForm {
-    private JTextField terminalCommand;
+public class OpenInCurrentDirAction extends OpenInTerminalAction {
 
-    private JTextField terminalCommandOptions;
-
-    private JPanel settingsPanel;
-
-    public JPanel getSettingsPanel() {
-        return settingsPanel;
-    }
-
-    public OpenInTerminalSettingsState getSettingsState() {
-        return new OpenInTerminalSettingsState(terminalCommand.getText(), terminalCommandOptions.getText());
-    }
-
-    public void setSettingsState(OpenInTerminalSettingsState settingsState) {
-        terminalCommand.setText(settingsState.getTerminalCommand());
-        terminalCommandOptions.setText(settingsState.getTerminalCommandOptions());
+    @NotNull
+    @Override
+    protected String getPath(AnActionEvent e, VirtualFile file, OpenInTerminalSettingsState openInTerminalSettingsState) {
+        return file.isDirectory() ? file.getPath() : file.getParent().getPath();
     }
 }

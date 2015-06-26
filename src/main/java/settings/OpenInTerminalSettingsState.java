@@ -26,15 +26,12 @@ public class OpenInTerminalSettingsState {
 
     private String terminalCommandOptions;
 
-    private boolean openInModule;
-
     public OpenInTerminalSettingsState() {
     }
 
-    public OpenInTerminalSettingsState(String terminalCommand, String terminalCommandOptions, boolean openInModule) {
+    public OpenInTerminalSettingsState(String terminalCommand, String terminalCommandOptions) {
         this.terminalCommand = terminalCommand;
         this.terminalCommandOptions = terminalCommandOptions;
-        this.openInModule = openInModule;
     }
 
     public String getTerminalCommand() {
@@ -53,14 +50,6 @@ public class OpenInTerminalSettingsState {
         this.terminalCommandOptions = terminalCommandOptions;
     }
 
-    public boolean isOpenInModule() {
-        return openInModule;
-    }
-
-    public void setOpenInModule(boolean openInModule) {
-        this.openInModule = openInModule;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -68,7 +57,6 @@ public class OpenInTerminalSettingsState {
 
         OpenInTerminalSettingsState that = (OpenInTerminalSettingsState) o;
 
-        if (openInModule != that.openInModule) return false;
         if (!terminalCommand.equals(that.terminalCommand)) return false;
         return terminalCommandOptions.equals(that.terminalCommandOptions);
 
@@ -78,7 +66,6 @@ public class OpenInTerminalSettingsState {
     public int hashCode() {
         int result = terminalCommand.hashCode();
         result = 31 * result + terminalCommandOptions.hashCode();
-        result = 31 * result + (openInModule ? 1 : 0);
         return result;
     }
 }

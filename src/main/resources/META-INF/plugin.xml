@@ -19,7 +19,7 @@
 <idea-plugin version="2">
   <id>pl.lksztmczk.openinterminal</id>
   <name>Open in terminal</name>
-  <version>1.0</version>
+  <version>1.5</version>
   <vendor email="lksztmczk@gmail.com" url="http://www.github.com/luktom">Łukasz Tomczak</vendor>
 
   <description><![CDATA[
@@ -27,6 +27,8 @@
     ]]></description>
 
   <change-notes><![CDATA[
+      1.5<br>
+      <em>Another action added to open terminal in module directory of current file instead of switch in plugin settings.</em><br><br>
       1.0<br>
       <em>Initial version of the plugin.</em>
     ]]>
@@ -48,10 +50,15 @@
   </project-components>
 
   <actions>
-    <action id="OpenInTerminal.open" class="actions.OpenInTerminalAction" text="Open terminal from here"
-            description="Opens terminal with choosen directory.">
+    <action id="OpenInTerminal.open.current" class="actions.OpenInCurrentDirAction" text="Open terminal in current directory"
+            description="Opens terminal in parent directory of current file.">
       <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="CompareClipboardWithSelection"/>
       <add-to-group group-id="ProjectViewPopupMenu" anchor="after" relative-to-action="RevealIn"/>
+    </action>
+    <action id="OpenInTerminal.open.module" class="actions.OpenInModuleDirAction" text="Open terminal in module directory"
+            description="Opens terminal in module directory of current file.">
+      <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="OpenInTerminal.open.current"/>
+      <add-to-group group-id="ProjectViewPopupMenu" anchor="after" relative-to-action="OpenInTerminal.open.current"/>
     </action>
   </actions>
 

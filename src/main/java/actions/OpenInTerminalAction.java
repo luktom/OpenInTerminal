@@ -1,6 +1,6 @@
 /**
  * Copyright (C) 2015 Łukasz Tomczak <lksztmczk@gmail.com>.
- * 
+ *
  * This file is part of OpenInTerminal plugin.
  *
  * OpenInTerminal plugin is free software: you can redistribute it and/or modify
@@ -26,20 +26,23 @@ import com.intellij.notification.Notifications;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.vfs.VirtualFile;
+import org.jetbrains.annotations.NotNull;
 import settings.OpenInTerminalSettings;
 import settings.OpenInTerminalSettingsState;
 
 /**
  * @author Łukasz Tomczak <lksztmczk@gmail.com>
  */
-public class OpenInTerminalAction extends AnAction {
-    public static final String ERROR_DURING_OPENING_TERMINAL_MESSAGE = "Error during opening terminal app. You current command for opening terminal is: %s %s. Check if it is correct.";
-    public static final String OPTIONS_NOT_PROVIDED_MESSAGE = "You do not provide needed settings for OpenInTerminal plugin. Please set them before usage.";
-    public static final String NOTIFICATION_DISPLAY_ID = "OpenInTerminal";
-    public static final String NOTIFICATION_TITLE = "OpenInTerminal plugin";
+public abstract class OpenInTerminalAction extends AnAction {
+
+    protected static final String ERROR_DURING_OPENING_TERMINAL_MESSAGE = "Error during opening terminal app. You current command for opening terminal is: %s %s. Check if it is correct.";
+
+    protected static final String OPTIONS_NOT_PROVIDED_MESSAGE = "You do not provide needed settings for OpenInTerminal plugin. Please set them before usage.";
+
+    protected static final String NOTIFICATION_DISPLAY_ID = "OpenInTerminal";
+
+    protected static final String NOTIFICATION_TITLE = "OpenInTerminal plugin";
 
     public void actionPerformed(AnActionEvent e) {
 
@@ -49,39 +52,39 @@ public class OpenInTerminalAction extends AnAction {
 
         if (openInTerminalSettingsState != null) {
 
-            String directoryPath;
-
-            if (file.isDirectory()) {
-                directoryPath = file.getPath();
-            } else {
-                if (openInTerminalSettingsState.isOpenInModule()) {
-                    Module moduleForFile = ModuleUtil.findModuleForFile(file, e.getProject());
-                    directoryPath = moduleForFile.getProject().getBaseDir().getPath();
-                } else {
-                    directoryPath = file.getParent().getPath();
-                }
-            }
+            String directoryPath = getPath(e, file, openInTerminalSettingsState);
 
             try {
                 GeneralCommandLine gcl = new GeneralCommandLine(openInTerminalSettingsState.getTerminalCommand(),
                         openInTerminalSettingsState.getTerminalCommandOptions(), directoryPath);
                 gcl.createProcess();
             } catch (ExecutionException exception) {
-                Notifications.Bus.notify(new Notification("openInTerminal", "OpenInTerminal plugin",
-                        String.format(ERROR_DURING_OPENING_TERMINAL_MESSAGE,
-                                openInTerminalSettingsState.getTerminalCommand(),
-                                openInTerminalSettingsState.getTerminalCommandOptions()),
-                        NotificationType.ERROR));
+                notifyAboutIncorrectOptions(openInTerminalSettingsState);
             }
         } else {
-            Notifications.Bus.notify(new Notification(NOTIFICATION_DISPLAY_ID, NOTIFICATION_TITLE,
-                    OPTIONS_NOT_PROVIDED_MESSAGE,
-                    NotificationType.WARNING));
+            notifyAboutUnsetOptions();
         }
     }
+
+    @NotNull
+    protected abstract String getPath(AnActionEvent e, VirtualFile file, OpenInTerminalSettingsState openInTerminalSettingsState);
 
     @Override
     public void update(AnActionEvent e) {
         e.getPresentation().setVisible(e.getData(CommonDataKeys.VIRTUAL_FILE) != null);
+    }
+
+    protected void notifyAboutIncorrectOptions(OpenInTerminalSettingsState openInTerminalSettingsState) {
+        Notifications.Bus.notify(new Notification(NOTIFICATION_DISPLAY_ID, NOTIFICATION_TITLE,
+                String.format(ERROR_DURING_OPENING_TERMINAL_MESSAGE,
+                        openInTerminalSettingsState.getTerminalCommand(),
+                        openInTerminalSettingsState.getTerminalCommandOptions()),
+                NotificationType.ERROR));
+    }
+
+    protected void notifyAboutUnsetOptions() {
+        Notifications.Bus.notify(new Notification(NOTIFICATION_DISPLAY_ID, NOTIFICATION_TITLE,
+                OPTIONS_NOT_PROVIDED_MESSAGE,
+                NotificationType.WARNING));
     }
 }
