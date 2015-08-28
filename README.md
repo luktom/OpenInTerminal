@@ -11,3 +11,5 @@ Example configuration:
 * Options: _--working-directory_
 
 Above configuration will execute following command: _gnome-terminal_ _--working-directory_ _"path_to_file_or_directory"_. 
+
+If you are a Mac OS X user and wondering what command opens terminal application, please see [following post on StackOverflow](http://stackoverflow.com/a/7054045).
