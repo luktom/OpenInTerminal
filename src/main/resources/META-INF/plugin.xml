@@ -19,7 +19,7 @@
 <idea-plugin version="2">
   <id>pl.lksztmczk.openinterminal</id>
   <name>Open in terminal</name>
-  <version>1.5</version>
+  <version>1.5.1</version>
   <vendor email="lksztmczk@gmail.com" url="http://www.github.com/luktom">Łukasz Tomczak</vendor>
 
   <description><![CDATA[
@@ -27,6 +27,8 @@
     ]]></description>
 
   <change-notes><![CDATA[
+      1.5.1<br>
+      <em>Minor fix to make it workable on Windows systems.</em><br><br>
       1.5<br>
       <em>Another action added to open terminal in module directory of current file instead of switch in plugin settings.</em><br><br>
       1.0<br>
