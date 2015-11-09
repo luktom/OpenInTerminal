@@ -18,8 +18,7 @@
  */
 package actions;
 
-import com.intellij.execution.ExecutionException;
-import com.intellij.execution.configurations.GeneralCommandLine;
+import com.google.common.base.Joiner;
 import com.intellij.notification.Notification;
 import com.intellij.notification.NotificationType;
 import com.intellij.notification.Notifications;
@@ -30,6 +29,8 @@ import com.intellij.openapi.vfs.VirtualFile;
 import org.jetbrains.annotations.NotNull;
 import settings.OpenInTerminalSettings;
 import settings.OpenInTerminalSettingsState;
+
+import java.io.IOException;
 
 /**
  * @author Łukasz Tomczak <lksztmczk@gmail.com>
@@ -54,11 +55,13 @@ public abstract class OpenInTerminalAction extends AnAction {
 
             String directoryPath = getPath(e, file, openInTerminalSettingsState);
 
+            String openTerminalCmd = Joiner.on(" ").join(
+                    openInTerminalSettingsState.getTerminalCommand(),
+                    openInTerminalSettingsState.getTerminalCommandOptions(),
+                    directoryPath);
             try {
-                GeneralCommandLine gcl = new GeneralCommandLine(openInTerminalSettingsState.getTerminalCommand(),
-                        openInTerminalSettingsState.getTerminalCommandOptions(), directoryPath);
-                gcl.createProcess();
-            } catch (ExecutionException exception) {
+                Runtime.getRuntime().exec(openTerminalCmd);
+            } catch (IOException e1) {
                 notifyAboutIncorrectOptions(openInTerminalSettingsState);
             }
         } else {
