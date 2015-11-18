@@ -15,6 +15,11 @@ Before usage please set command and options for terminal app in plugin settings.
 * Terminal command: _cmd /C start cmd.exe /K_
 * Options: _cd /D_
 
+#### Windows (with babun or cygwin):
+
+ * Terminal command: _C:\<USER-DIRECTORY>\.babun\cygwin\bin\mintty.exe_
+ * Options: _-i /Cygwin-Terminal.ico  C:\<USER-DIRECTORY>\.babun\cygwin\bin\bash.exe  -l -c "cd \"$0\" ; exec bash"_
+  
 #### Mac OS:
 
 * Terminal command: _open -a Terminal_
