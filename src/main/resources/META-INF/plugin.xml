@@ -1,5 +1,5 @@
 <!--
-  Copyright (C) 2015 Łukasz Tomczak <lksztmczk@gmail.com>.
+  Copyright (C) 2015 - 2021 Łukasz Tomczak <lksztmczk@gmail.com>.
 
   This file is part of OpenInTerminal plugin.
 
@@ -16,27 +16,14 @@
   You should have received a copy of the GNU Lesser General Public License  
   along with OpenInTerminal plugin. If not, see <http://www.gnu.org/licenses/>.  
 -->
-<idea-plugin version="2">
+<idea-plugin>
   <id>pl.lksztmczk.openinterminal</id>
   <name>Open in terminal</name>
-  <version>1.5.1</version>
   <vendor email="lksztmczk@gmail.com" url="http://www.github.com/luktom">Łukasz Tomczak</vendor>
 
   <description><![CDATA[
       This plugin adds possibility for open terminal from editor and project context menu in corresponding file/directory location.<br>
     ]]></description>
-
-  <change-notes><![CDATA[
-      1.5.1<br>
-      <em>Minor fix to make it workable on Windows systems.</em><br><br>
-      1.5<br>
-      <em>Another action added to open terminal in module directory of current file instead of switch in plugin settings.</em><br><br>
-      1.0<br>
-      <em>Initial version of the plugin.</em>
-    ]]>
-  </change-notes>
-
-  <idea-version since-build="131"/>
 
   <depends>com.intellij.modules.lang</depends>
 
@@ -44,12 +31,6 @@
     <applicationConfigurable id="OpenInTerminal.settings" instance="settings.OpenInTerminalSettingsConfigurable"/>
     <applicationService serviceImplementation="settings.OpenInTerminalSettings"/>
   </extensions>
-
-  <application-components>
-  </application-components>
-
-  <project-components>
-  </project-components>
 
   <actions>
     <action id="OpenInTerminal.open.current" class="actions.OpenInCurrentDirAction" text="Open terminal in current directory"

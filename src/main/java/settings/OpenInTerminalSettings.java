@@ -1,5 +1,5 @@
-/**
- * Copyright (C) 2015 Łukasz Tomczak <lksztmczk@gmail.com>.
+/*
+ * Copyright (C) 2015 - 2021 Łukasz Tomczak <lksztmczk@gmail.com>.
  *
  * This file is part of OpenInTerminal plugin.
  *
@@ -19,6 +19,7 @@
 package settings;
 
 import com.intellij.openapi.components.*;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -26,7 +27,7 @@ import org.jetbrains.annotations.Nullable;
  */
 @State(
         name = "OpenInTerminalSettings",
-        storages = @Storage(file = StoragePathMacros.APP_CONFIG + "/openinterminal.xml")
+        storages = @Storage("openinterminal.xml")
 )
 public class OpenInTerminalSettings implements PersistentStateComponent<OpenInTerminalSettingsState> {
 
@@ -43,7 +44,7 @@ public class OpenInTerminalSettings implements PersistentStateComponent<OpenInTe
     }
 
     @Override
-    public void loadState(OpenInTerminalSettingsState state) {
+    public void loadState(@NotNull OpenInTerminalSettingsState state) {
         openInTerminalSettingsState = state;
     }
 }
