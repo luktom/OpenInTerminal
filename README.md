@@ -12,6 +12,13 @@ Before usage please set command and options for terminal app in plugin settings.
 
 #### Windows:
 
+###### Powershell
+
+* Terminal command: _cmd /C start powershell.exe /noexit_
+* Options: _cd_
+
+###### Command Prompt
+
 * Terminal command: _cmd /C start cmd.exe /K_
 * Options: _cd /D_
 
